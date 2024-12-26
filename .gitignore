@@ -2,6 +2,8 @@
 
 # dependencies
 node_modules/
+assets/google-services.json
+assets/GoogleService-Info.plist
 
 # Expo
 .expo/
