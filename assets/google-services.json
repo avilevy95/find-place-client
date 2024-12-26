@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "395756144401",
+    "project_id": "find-places-2ae78",
+    "storage_bucket": "find-places-2ae78.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395756144401:android:150d8f382f440d21c6aeb0",
+        "android_client_info": {
+          "package_name": "com.find_places.myapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "395756144401-rs350f9m0ue670e58d5sln6mb9omas0p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgDj9aC0hDcOorGxAnveh3X48YAzi0hQg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "395756144401-rs350f9m0ue670e58d5sln6mb9omas0p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

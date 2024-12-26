@@ -1,0 +1,50 @@
+{
+  "expo": {
+    "name": "FindPlaces",
+    "slug": "find-places",
+    "scheme": "findplaces",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "googleServicesFile": "./assets/GoogleService-Info.plist",
+      "supportsTablet": true,
+      "bundleIdentifier": "com.find-places.myapp",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "We need your location to find nearby restaurants."
+      }
+    },
+    "android": {
+      "package": "com.find_places.myapp",
+      "googleServicesFile": "./assets/google-services.json",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "ACCESS_FINE_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "94595434-40b0-4a02-a1c8-eb453b43bd3a"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/94595434-40b0-4a02-a1c8-eb453b43bd3a"
+    }
+  }
+}
