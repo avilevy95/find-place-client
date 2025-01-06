@@ -24,6 +24,7 @@ baseAPI.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true; 
       try {
+        console.log('Refreshing token...');
         const newAccessToken = await authService.refreshAccessToken();
         originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
         return baseAPI(originalRequest);

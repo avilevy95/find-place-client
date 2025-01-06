@@ -1,111 +1,79 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, TextInput, Alert } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons'; // Install if not already: expo install @expo/vector-icons
+import { View, Text, TouchableOpacity, StyleSheet, Modal, TextInput, Alert, Image } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { UserContext } from '../contexts/UserContext';
-import { feedbackService } from '../services/feedbackService';
+import  FeedbackModal  from './FeedbackModal';
 
 export default function Navbar({ navigation }) {
-  const { user, logout } = useContext(UserContext);
+  const { userData, logout } = useContext(UserContext);
   const [menuVisible, setMenuVisible] = useState(false);
   const [feedbackVisible, setFeedbackVisible] = useState(false);
-  const [feedbackText, setFeedbackText] = useState('');
-
   const toggleMenu = () => setMenuVisible(!menuVisible);
-
   const handleLogout = () => {
     logout();
     navigation.replace('Login');
   };
 
-  const submitFeedback = async() => {
-    if (!feedbackText.trim()) {
-      Alert.alert('שגיאה', 'נא להזין משוב לפני שליחה');
-      return;
-    }
-    try {
-      await feedbackService.sendFeedback(feedbackText);
-      console.log('Feedback sent successfully');
-      closeFeedbackModal();
-    } catch (error) {
-      console.error('Failed to send feedback:', error);
-    }
-  };
-
-
-
-return (
-  <View style={styles.container}>
-    <View style={styles.navbarContent}>
-      <TouchableOpacity
-        style={styles.feedbackBubble}
-        onPress={() => setFeedbackVisible(true)}
-      >
-        <MaterialIcons name="feedback" size={24} color="#fff" />
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.userContainer} onPress={toggleMenu}>
-        <MaterialIcons name="person" size={24} color="#fff" style={styles.icon} />
-        <Text style={styles.userName}>{user?.userName || "משתמש"}</Text>
-      </TouchableOpacity>
-
-
-    </View>
-
-    <Modal
-      transparent={true}
-      animationType="fade"
-      visible={menuVisible}
-      onRequestClose={() => setMenuVisible(false)}
-    >
-      <TouchableOpacity style={styles.modalOverlay} onPress={() => setMenuVisible(false)} />
-      <View style={styles.menuContainer}>
+  return (
+    <View style={styles.container}>
+      <View style={styles.navbarContent}>
         <TouchableOpacity
-          onPress={() => {
-            setMenuVisible(false);
-            navigation.navigate('ProfileSettings');
-          }}
+          style={styles.feedbackBubble}
+          onPress={() => setFeedbackVisible(true)}
         >
-          <Text style={styles.menuItem}>הגדרות פרופיל</Text>
+          <MaterialIcons name="feedback" size={24} color="#fff" />
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            setMenuVisible(false);
-            handleLogout();
-          }}
-        >
-          <Text style={styles.menuItem}>התנתק</Text>
+
+        <TouchableOpacity style={styles.userContainer} onPress={toggleMenu}>
+          <MaterialIcons name="person" size={24} color="#fff" style={styles.icon} />
+          <Text style={styles.userName}>{userData?.isAdmin?" מנהל" : ""} {userData?.userName || "משתמש"}</Text>
         </TouchableOpacity>
+
+
       </View>
-    </Modal>
 
-    <Modal
-      transparent={true}
-      animationType="slide"
-      visible={feedbackVisible}
-      onRequestClose={() => setFeedbackVisible(false)}
-    >
-      <View style={styles.feedbackModalContainer}>
-        <View style={styles.feedbackModalContent}>
-          <Text style={styles.feedbackTitle}>כתבו לנו משוב</Text>
-          <TextInput
-            style={styles.feedbackInput}
-            placeholder="הקלידו את המשוב שלכם כאן"
-            placeholderTextColor="#888"
-            multiline
-            value={feedbackText}
-            onChangeText={setFeedbackText}
-          />
-          <TouchableOpacity style={styles.submitButton} onPress={submitFeedback}>
-            <Text style={styles.submitButtonText}>שלח</Text>
+      <Modal
+        transparent={true}
+        animationType="fade"
+        visible={menuVisible}
+        onRequestClose={() => setMenuVisible(false)}
+      >
+        <TouchableOpacity style={styles.modalOverlay} onPress={() => setMenuVisible(false)} />
+        <View style={styles.menuContainer}>
+        {userData?.isAdmin && (
+            <TouchableOpacity
+              onPress={() => {
+                setMenuVisible(false);
+                navigation.navigate('AdminPanel');
+              }}
+            >
+              <Text style={styles.menuItem}>אזור ניהול</Text>
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity
+            onPress={() => {
+              setMenuVisible(false);
+              navigation.navigate('ProfileSettings');
+            }}
+          >
+            <Text style={styles.menuItem}>הגדרות פרופיל</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.cancelButton} onPress={() => setFeedbackVisible(false)}>
-            <Text style={styles.cancelButtonText}>ביטול</Text>
+          <TouchableOpacity
+            onPress={() => {
+              setMenuVisible(false);
+              handleLogout();
+            }}
+          >
+            <Text style={styles.menuItem}>התנתק</Text>
           </TouchableOpacity>
         </View>
-      </View>
-    </Modal>
-  </View>
-);
+      </Modal>
+
+
+     <FeedbackModal visible={feedbackVisible} onClose = {()=>{setFeedbackVisible(false)}}></FeedbackModal>
+
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

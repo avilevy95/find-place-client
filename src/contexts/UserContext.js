@@ -5,16 +5,16 @@ import { authService } from '../services/authService';
 export const UserContext = createContext();
 
 export default function UserProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [userData, setUserData] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchUser = async () => {
       try{
       const authenticated = await authService.isAuthenticated();
-      userData = await authService.getUserData();
+      const newUserData = await authService.getUserData();
       setIsAuthenticated(authenticated);
-      setUser(userData);
+      setUserData(newUserData);
       }catch(error){
 
       }finally{
@@ -26,17 +26,17 @@ export default function UserProvider({ children }) {
 
   const login = (userData) => {
     setIsAuthenticated(true);
-    setUser(userData);
+    setUserData(userData);
   };
 
   const logout = async () => {
     await authService.logout();
     setIsAuthenticated(false);
-    setUser(null);
+    setUserData(null);
   };
 
   return (
-    <UserContext.Provider value={{ user, isLoading, isAuthenticated, login, logout }}>
+    <UserContext.Provider value={{ userData,isLoading, isAuthenticated, login, logout }}>
       {children}
     </UserContext.Provider>
   );

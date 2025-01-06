@@ -7,6 +7,6 @@ export const STORAGE_KEYS = {
   };
   
   export const API_CONFIG = {
-    BASE_URL: 'https://find-place-server.onrender.com',
+    BASE_URL: 'https://find-place-server.onrender.com',//'http://192.168.43.236',
   };
   

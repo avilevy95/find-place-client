@@ -21,6 +21,7 @@ import PlaceDetailsScreen from '../screens/Home/PlaceDetailsScreen';
 import SearchResultsScreen from '../screens/SearchResults/SearchResultsScreen';
 import ProfileSettingsScreen from '../screens/Profile/ProfileSettingsScreen';
 import SplashScreen from '../screens/SplashScreen';
+import AdminPanel from '../screens/Profile/AdminPanel';
 const Stack = createStackNavigator();
 
 export default function AppNavigator() {
@@ -59,6 +60,9 @@ export default function AppNavigator() {
           </Stack.Screen>
           <Stack.Screen name="ProfileSettings">
             {(props) => <ScreenWrapper {...props} component={ProfileSettingsScreen} />}
+          </Stack.Screen>
+          <Stack.Screen name="AdminPanel">
+            {(props) => <ScreenWrapper {...props} component={AdminPanel} />}
           </Stack.Screen>
         </>
       )}

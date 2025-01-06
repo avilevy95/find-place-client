@@ -7,13 +7,13 @@ export const authService = {
   login: async (email, password) => {
     try {
       const response = await baseAPI.post('auth/login', { email, password });
-      const { accessToken, refreshToken, userName } = response.data;
+      const { accessToken, refreshToken, userName ,isAdmin} = response.data;
       console.log(response.data)
       await AsyncStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, accessToken);
       await AsyncStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, refreshToken);
-      await AsyncStorage.setItem(STORAGE_KEYS.USER_DATA, JSON.stringify({ userName }));
+      await AsyncStorage.setItem(STORAGE_KEYS.USER_DATA, JSON.stringify({ userName: userName, isAdmin:isAdmin }));
 
-      return { accessToken, refreshToken, userName };
+      return { accessToken, refreshToken, userName,isAdmin };
     } catch (error) {
       console.error('Login error:', error);
       throw error;
